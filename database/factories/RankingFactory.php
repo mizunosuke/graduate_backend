@@ -18,9 +18,9 @@ class RankingFactory extends Factory
     {
         return [
             //
-            'start' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            'end' => $this->faker->dateTimeBetween('now', '+1 month'),
-            'num_of_participant' => $this->faker->numberBetween(1, 100),
+            // 'start' => $this->faker->dateTimeBetween('-1 month', 'now'),
+            // 'end' => $this->faker->dateTimeBetween('now', '+1 month'),
+            // 'num_of_participant' => $this->faker->numberBetween(1, 100),
             'fish_id' => Fish::factory(),
         ];
     }

@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('rankings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->dateTime('start');
-            $table->dateTime('end');
-            $table->integer('num_of_participant');
+            $table->dateTime('start')->nullable();
+            $table->dateTime('end')->nullable();
+            $table->integer('num_of_participant')->nullable();;
             $table->foreignId('fish_id')->constrained('fish')->onUpdate('cascade')->onDelete('cascade');
+            $table->json('rank')->nullable();
             $table->timestamps();
         });
     }

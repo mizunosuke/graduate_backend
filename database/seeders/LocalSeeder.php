@@ -17,10 +17,10 @@ class LocalSeeder extends Seeder
     public function run(): void
     {
         //
-        User::factory()->count(10)->create();
-        Fish::factory()->count(10)->create();
-        Post::factory()->count(30)->create();
-        Ranking::factory()->count(10)->create();
+        User::factory()->count(100)->create();
+        Fish::factory()->count(30)->create();
+        Post::factory()->count(300)->create();
+        // Ranking::factory()->count(10)->create();
 
         
     }

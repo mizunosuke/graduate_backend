@@ -25,7 +25,7 @@ class PostFactory extends Factory
             'attachment' => $this->faker->imageUrl(),
             'fish_id' => Fish::inRandomOrder()->first()->id,
             'size' => $this->faker->randomNumber(3),
-            'day_of_fishing' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'day_of_fishing' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
         ];
     }
 }
