@@ -17,5 +17,11 @@ class FishController extends Controller
 
         $limitedPosts = Post::where("fish_id", "=", $request->id)->orderby("size","desc")->get();
         return $limitedPosts;
-    } 
+    }
+    
+    public function fish ($id)
+    {
+        $fishname = Fish::find($id)->name;
+        return $fishname;
+    }
 }

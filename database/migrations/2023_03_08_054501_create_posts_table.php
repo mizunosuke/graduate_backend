@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('attachment');
             $table->foreignId('fish_id')->constrained('fish')->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('size');
+            $table->float('size', 8, 2);
             $table->date('day_of_fishing');
             $table->integer('ranking')->nullable();
             $table->timestamps();

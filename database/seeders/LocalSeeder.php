@@ -18,7 +18,7 @@ class LocalSeeder extends Seeder
     {
         //
         User::factory()->count(100)->create();
-        Fish::factory()->count(30)->create();
+        Fish::factory()->count(50)->create();
         Post::factory()->count(300)->create();
         // Ranking::factory()->count(10)->create();
 

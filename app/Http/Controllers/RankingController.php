@@ -33,6 +33,15 @@ class RankingController extends Controller
             $ranking->posts = $posts;
         }
 
+        //ランキングデータ内の取得した投稿のユーザー情報を取得
+        foreach ($allranking as $ranking) {
+            $ranking_posts = $ranking->posts;
+            foreach ($ranking_posts as $post) {
+                $user = User::where("id", "=", $post->user_id)->get();
+                $post->user = $user;
+            }
+        }
+
         return $allranking;
     }
 
@@ -50,7 +59,7 @@ class RankingController extends Controller
         $end = Carbon::now()->endOfWeek();
 
         // 投稿データを取得し、ソートする
-        $postData = Post::where("fish_id", "=", $id)->whereBetween("day_of_fishing", [$start, $end])->orderBy("size", "desc")->get();
+        $postData = Post::where("fish_id", "=", $id)->whereBetween("created_at", [$start, $end])->orderBy("size", "desc")->get();
 
         $userPostData = []; // ユーザーの投稿データを格納する配列
         foreach ($postData as $post) {
@@ -62,6 +71,7 @@ class RankingController extends Controller
                 "post_id" => $post->id,
                 "user_id" => $user->id,
                 "user_name" => $user->name,
+                "user_icon" => $user->icon_path,
                 "attachment" => $post->attachment,
                 "size" => $post->size,
                 "day_of_fishing" => $post->day_of_fishing,

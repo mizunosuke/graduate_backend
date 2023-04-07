@@ -1,55 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
-    /**
-     * Redirect the user to the Google authentication page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index (Request $request)
+    public function update(Request $request, $id)
     {
-        $user = User::find($request->id);
-        return $user;
-    }
+        $user = User::findOrFail($id); // ユーザーモデルの取得
 
+        // リクエストデータを取得
+        $icon_path = $request->input('icon_path');
+        $name = $request->input('name');
+        $email = $request->input('email');
 
-    public function redirectToGoogle()
+        // ユーザーモデルのプロパティを更新
+        $user->icon_path = $icon_path;
+        $user->name = $name;
+        $user->email = $email;
+
+        $user->save(); // データベースの保存
+
+        return response()->json(['user' => $user]); 
+    } 
+    
+    public function index(Request $request, $id)
     {
-        return Socialite::driver('google')->redirect();
-    }
+        $user = User::find($id); // ユーザーモデルの取得
+        return $user; 
+    } 
 
-    /**
-     * Obtain the user information from Google.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function handleGoogleCallback(Request $request)
-    {
-        $googleUser = Socialite::driver('google')->user();
-
-        // DBにユーザー情報を保存
-        $user = User::updateOrCreate(
-            ['email' => $googleUser->email],
-            [
-                'name' => $googleUser->name,
-                'email_verified' => true, // Google認証なので常にtrue
-                'password' => null, // パスワードは不要なのでnull
-                'icon_path' => $googleUser->avatar,
-            ]
-        );
-
-        // ログイン処理
-        Auth::login($user, true);
-
-        return redirect('/home');
-    }
 }
